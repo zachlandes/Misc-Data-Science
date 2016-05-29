@@ -25,11 +25,22 @@ class AnalogSpider(CrawlSpider):
         #from scrapy.shell import inspect_response
         #inspect_response(response, self)
         
-
+        #if response =[]:
+        #    self.start_urls = the_
         item = RedditItem()
 
         item['dates'] = response.xpath('//div[@class="search-result-meta"]/span[@class="search-time"]/time/@title').extract()
         #item['authors'] = response.xpath('//p[@class="tagline"]/a[@class="author may-blank "]/text()').extract()
         item['votes'] = response.xpath('//div[@class="search-result-meta"]/span[@class="search-score"]/text()').extract()
+        
+        #self.last_date = item['dates'][-1]
+
         yield item
+
+
+#something along the lines of http://kirankoduru.github.io/python/multiple-scrapy-spiders.html
+#if signal of crawler_obj == 0:
+#    last_date = crawler_obj.last_date
+#    url = (url from last date)
+#    crawler_obj = spider(url=url)
 		

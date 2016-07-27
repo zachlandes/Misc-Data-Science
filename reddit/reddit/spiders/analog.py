@@ -12,12 +12,12 @@ def epoch_conv2(rdate):                             #converts utc timestamps to 
     return epoch
 
 def url_frmt(start_date, end_date):
-    url = 'https://www.reddit.com/r/analog/search?sort=new&q=timestamp%3A'+'{}'.format(str(start_date))+'..'+'{}'.format(str(end_date))+'&restrict_sr=on&syntax=cloudsearch' 
+    url = 'https://www.reddit.com/r/analog/search?sort=new&q=timestamp%3A'+'{}'.format(str(end_date))+'..'+'{}'.format(str(start_date))+'&restrict_sr=on&syntax=cloudsearch' 
     return url
 def rule_frmt(start_date, end_date):
-    r1 = '/r/analog/search\?sort=new&q=timestamp%3A'+'{}'.format(str(start_date))+'..'+'{}'.format(str(end_date))+'&restrict_sr=on&syntax=cloudsearch&count=\d*&after=\w*'
-    r2 = '/r/analog/search\?q=timestamp%3A'+'{}'.format(str(start_date))+'..'+'{}'.format(str(end_date))+'&restrict_sr=on&sort=new&syntax=cloudsearch&count=\d*&after=\w*'
-    r3 = '/r/analog/search\?after=\w*&count=\d*&q=timestamp%3A'+'{}'.format(str(start_date))+'..'+'{}'.format(str(end_date))+'&restrict_sr=on&sort=new&syntax=cloudsearch'
+    r1 = '/r/analog/search\?sort=new&q=timestamp%3A'+'{}'.format(str(end_date))+'..'+'{}'.format(str(start_date))+'&restrict_sr=on&syntax=cloudsearch&count=\d*&after=\w*'
+    r2 = '/r/analog/search\?q=timestamp%3A'+'{}'.format(str(end_date))+'..'+'{}'.format(str(start_date))+'&restrict_sr=on&sort=new&syntax=cloudsearch&count=\d*&after=\w*'
+    r3 = '/r/analog/search\?after=\w*&count=\d*&q=timestamp%3A'+'{}'.format(str(end_date))+'..'+'{}'.format(str(start_date))+'&restrict_sr=on&sort=new&syntax=cloudsearch'
     return [r1, r2, r3]
 
 def start_url_gen(sdate = datetime.datetime.utcnow() - datetime.timedelta(weeks=2), num_weeks = 51):
@@ -71,7 +71,7 @@ class AnalogSpider(CrawlSpider):
         item = RedditItem()
 
         item['dates'] = response.xpath('//div[@class="search-result-meta"]/span[@class="search-time"]/time/@title').extract()
-        #item['authors'] = response.xpath('//p[@class="tagline"]/a[@class="author may-blank "]/text()').extract()
+        item['authors'] = response.xpath('//p[@class="tagline"]/a[@class="author may-blank "]/text()').extract()
         item['votes'] = response.xpath('//div[@class="search-result-meta"]/span[@class="search-score"]/text()').extract()
         
         #self.last_date = item['dates'][-1]

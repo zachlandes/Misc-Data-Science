@@ -12,6 +12,6 @@ class RedditItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     dates = scrapy.Field()
-    #authors = scrapy.Field()
+    authors = scrapy.Field()
     votes = scrapy.Field()
     #pass
